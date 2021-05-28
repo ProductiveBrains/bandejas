@@ -1,0 +1,164 @@
+<%- include ("../partials/_header") %>
+
+    <div class="container ">
+        <div class="row">
+
+            <div class="col-12">
+                <h1 class="tituloPb1">Ala - Desvio Vertical Derecho</h1>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 ">
+                <div class="col-12  glass">
+                    <div class="row d-flex justify-content-center px-5">
+                        <div class="col-12 text-center">
+                            <h4 class="text-black text-uppercase">Ingrese los Datos Relevados</h4>
+                        </div>
+                    </div>
+
+                    <form id="idForm">
+
+                        <div class="row d-flex justify-content-center mt-1 px-1">
+                            <img class="" src="img/bandejaDVD_Descripcion.png" alt="" id="imagen" width="100%" height="500px">
+                        </div>
+
+                        <div class="row g-3 px-1">
+                            <div class="col-4">
+                                <label for="idancho" class="inputPb1">Ancho</label>
+                                <input type="number" class="form-control" id="idancho" required>
+                            </div>
+                            <div class="col-4">
+                                <label for="idesvio" class="inputPb1">Desvio</label>
+                                <input type="number" class="form-control" id="idesvio" required>
+                            </div>
+                            <div class="col-4">
+                                <label for="iddistancia" class="inputPb1">Distancia</label>
+                                <input type="number" class="form-control" id="iddistancia" required>
+                            </div>
+                        </div>
+                        <div class="row g-3 px-1 pb-2">
+                            <div class="col-4">
+                                <label for="idizquierdo" class="inputPb1">Ext. Sup.(min. 100)</label>
+                                <input type="number" class="form-control" id="idizquierdo" value="100" required>
+                            </div>
+                            <div class="col-4">
+                                <label for="idtolerancia" class="inputPb1">Tolerancia(min. 50)</label>
+                                <input type="number" class="form-control" id="idtolerancia" value="50" required>
+                            </div>
+                            <div class="col-4">
+                                <label for="idderecho" class="inputPb1">Ext. Inf.(min. 100)</label>
+                                <input type="number" class="form-control" id="idderecho" value="100" required>
+                            </div>
+                        </div>
+
+                        <div class="p-2 bg-dark d-flex justify-content-evenly">
+                            <button class="btn btn-primary" type="submit" id="botonCalcular">Calcular</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+                <div class="col-12  mb-2  glass">
+                    <div class="row d-flex justify-content-center px-5">
+                        <div class="col-12 text-center">
+                            <h4 class="text-dark text-uppercase">Resultado</h4>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-center mt-1 px-1">
+                        <img src="img/ala_horizontal_izquierda_cortada.png" alt="" id="imagencortada" width="100%" height="225px">
+                    </div>
+                    <div class="p-2  d-flex justify-content-evenly mt-1">
+                        <a class="btn btn-primary" href="https://bandejas.sotano.digital/alaDesvioVerDerecho" role="button">Resetear</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("idancho").focus();
+        })
+
+        function processForm(e) {
+            if (e.preventDefault) e.preventDefault();
+
+            /* do what you want with the form */
+            // console.log('aver');
+            const enviar_ancho = document.getElementById("idancho").value;
+            const enviar_idesvio = document.getElementById("idesvio").value;
+            const enviar_distancia = document.getElementById("iddistancia").value;
+            const enviar_tolerancia = document.getElementById("idtolerancia").value;
+            const enviar_izquierdo = document.getElementById("idizquierdo").value;
+            const enviar_derecho = document.getElementById("idderecho").value;
+
+            const parametros = JSON.stringify({
+                ancho: enviar_ancho,
+                desvio: enviar_idesvio,
+                distancia: enviar_distancia,
+                tolerancia: enviar_tolerancia,
+                extremoizquierdo: enviar_izquierdo,
+                extremoDerecho: enviar_derecho
+            })
+
+            fetch('https://bandejas.sotano.digital/inputVal_ala_ver_derecha/' + parametros + '')
+                .then(function(response) {
+                    console.log('response.body =', response.body);
+                    console.log('response.bodyUsed =', response.bodyUsed);
+                    console.log('response.headers =', response.headers);
+                    console.log('response.ok =', response.ok);
+                    console.log('response.status =', response.status);
+                    console.log('response.statusText =', response.statusText);
+                    console.log('response.type =', response.type);
+                    console.log('response.url =', response.url);
+                    return response.json();
+                })
+                .then(function(data) {
+                    console.log('data = ', data);
+                    console.log(data.imagen);
+                    document.getElementById("imagen").src = data.imagen;
+                })
+                .catch(function(err) {
+                    console.error(err);
+                });
+            // You must return false to prevent the default form behavior
+            // Imagen Cortada
+            fetch('https://bandejas.sotano.digital/cutVal_ala_ver_derecha/' + parametros + '')
+                .then(function(response) {
+                    console.log('response.body =', response.body);
+                    console.log('response.bodyUsed =', response.bodyUsed);
+                    console.log('response.headers =', response.headers);
+                    console.log('response.ok =', response.ok);
+                    console.log('response.status =', response.status);
+                    console.log('response.statusText =', response.statusText);
+                    console.log('response.type =', response.type);
+                    console.log('response.url =', response.url);
+                    return response.json();
+                })
+                .then(function(data) {
+                    console.log('data = ', data);
+                    console.log(data.imagen);
+                    document.getElementById("imagencortada").src = data.imagen;
+                })
+                .catch(function(err) {
+                    console.error(err);
+                });
+
+
+            //-------------------------------------------------------------
+            return false;
+        }
+
+        var form = document.getElementById('idForm');
+        if (form.attachEvent) {
+            form.attachEvent("submit", processForm);
+        } else {
+            form.addEventListener("submit", processForm);
+
+        }
+    </script>
+
+
+    <%- include ("../partials/_footer") %>

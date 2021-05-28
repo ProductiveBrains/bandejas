@@ -1,0 +1,24 @@
+.glass {
+    padding: 0.5em;
+    width: 100%;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 8px 0 rgba(142, 195, 202, 0.8);
+    backdrop-filter: blur(15px) !important;
+    border: 10px;
+}
+
+.inputPb1 {
+    font-weight: bold;
+    color: rgb(255, 251, 251);
+}
+
+.tituloPb1 {
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-family: "lato", sans-serif;
+    font-weight: 500;
+    font-size: 50px;
+    letter-spacing: 10px;
+    text-shadow: 1px 1px 1px rgb(255, 255, 255), 0 0 1em rgb(59, 181, 211), 0 0 0.2em blue;
+}
